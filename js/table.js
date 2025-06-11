@@ -29,15 +29,22 @@ function _clear_scores(node) {
     });
 }
 
+function _find_number_of_players(lastGame) {
+    const sumElements = lastGame.querySelectorAll(".sum");
+
+    return sumElements.length;
+}
+
 function _calculate_game_sum(lastGame) {
     const sumElements = lastGame.querySelectorAll(".sum");
+    const number_of_players = _find_number_of_players(lastGame);
     const valueElements = lastGame.querySelectorAll("tbody .value");
 
     sumElements.forEach(function (sumElement, sum_key) {
         let sum = 0;
 
         valueElements.forEach(function (valueElement, value_key) {
-            if (sum_key == value_key % sumElements.length) {
+            if (sum_key == value_key % number_of_players) {
                 const value = parseInt(valueElement.textContent);
 
                 if (Number.isInteger(value)) {
@@ -48,6 +55,13 @@ function _calculate_game_sum(lastGame) {
 
         sumElement.textContent = sum;
     });
+}
+
+function _get_data_key() {
+    const lastGame = _find_last_game();
+    const number_of_players = _find_number_of_players(lastGame);
+
+    return "uno_score_" + number_of_players;
 }
 
 function calculate_sum(element) {
@@ -79,9 +93,9 @@ function remove_round() {
 
     if (previousRoundNumber > 1) {
         const closestGame = previousRound.closest(".game");
-        
+
         previousRound.remove();
-        
+
         _calculate_game_sum(closestGame);
     }
 }
@@ -127,11 +141,13 @@ function save_games() {
         });
     });
 
-    localStorage.setItem('uno_game_2', JSON.stringify(data));
+    const data_key = _get_data_key();
+    localStorage.setItem(data_key, JSON.stringify(data));
 }
 
 function load_games() {
-    const data = JSON.parse(localStorage.getItem('uno_game_2'));
+    const data_key = _get_data_key();
+    const data = JSON.parse(localStorage.getItem(data_key));
     if (!data) throw new Error("No saved data");
 
     const lastGame = _find_last_game();
@@ -151,8 +167,7 @@ function load_games() {
     const gamesContainer = _find_games_container();
     gamesContainer.textContent = '';
 
-    const sumElements = lastGame.querySelectorAll(".sum");
-    const number_of_players = sumElements.length;
+    const number_of_players = _find_number_of_players(lastGame);
     const default_nymber_of_items = 2;
 
     for (const game of data) {
