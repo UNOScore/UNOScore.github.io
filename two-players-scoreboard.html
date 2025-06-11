@@ -17,7 +17,7 @@
             <div class="mb-5 text-center">
                 <h1>Two players scoreboard</h1>
             </div>
-            <table class="table table-bordered table-primary table-sm">
+            <table class="table table-bordered shadow-sm table-sm">
                 <thead>
                     <tr>
                         <th scope="col">
@@ -44,7 +44,7 @@
                 </thead>
             </table>
             <div class="games">
-                <table class="game table table-striped table-bordered table-sm">
+                <table class="game table table-striped table-bordered table-sm shadow-sm">
                     <thead class="align-middle">
                         <tr class="table-primary">
                             <th scope="col" rowspan="2">#</th>
@@ -59,8 +59,8 @@
                     <tbody class="rounds align-middle">
                         <tr class="game-round">
                             <th scope="row">1</th>
-                            <td contenteditable="plaintext-only" onkeyup="calculate_sum()" class="value"></td>
-                            <td contenteditable="plaintext-only" onkeyup="calculate_sum()" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
                         </tr>
                     </tbody>
                 </table>

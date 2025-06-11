@@ -50,9 +50,9 @@ function _calculate_game_sum(lastGame) {
     });
 }
 
-function calculate_sum() {
-    const lastGame = _find_last_game();
-    _calculate_game_sum(lastGame);
+function calculate_sum(element) {
+    const closestGame = element.closest(".game");
+    _calculate_game_sum(closestGame);
 }
 
 function next_round() {
@@ -78,7 +78,11 @@ function remove_round() {
     const previousRoundNumber = parseInt(previousRoundFirstRow.textContent);
 
     if (previousRoundNumber > 1) {
+        const closestGame = previousRound.closest(".game");
+        
         previousRound.remove();
+        
+        _calculate_game_sum(closestGame);
     }
 }
 
@@ -96,6 +100,8 @@ function next_game() {
             gameRound.remove();
         }
     });
+
+    _calculate_game_sum(newGame);
 
     gamesContainer.prepend(newGame);
 }
