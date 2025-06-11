@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>Ten players scoreboard - UNO Score</title>
+</head>
+
+<body>
+    <main class="container">
+        <div class="my-5">
+            <div class="mb-5 text-center">
+                <h1>Ten players scoreboard</h1>
+            </div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a class="text-primary" href="/">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Ten players scoreboard</li>
+                </ol>
+            </nav>
+            <table class="table table-bordered shadow-sm table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <button type="button" class="btn btn-success" onclick="next_round()">Next Round</button>
+                        </th>
+                        <th scope="col">
+                            <button type="button" class="btn btn-success" onclick="next_game()">Next Game</button>
+                        </th>
+                        <th scope="col">
+                            <button type="button" class="btn btn-secondary" onclick="save_games()">Save Games</button>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th scope="col">
+                            <button type="button" class="btn btn-danger" onclick="remove_round()">Remove Round</button>
+                        </th>
+                        <th scope="col">
+                            <button type="button" class="btn btn-danger" onclick="remove_game()">Remove Game</button>
+                        </th>
+                        <th scope="col">
+                            <button type="button" class="btn btn-secondary" onclick="load_games()">Load Games</button>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="games">
+                <table class="game table table-striped table-bordered table-sm shadow-sm">
+                    <thead class="align-middle">
+                        <tr class="table-primary">
+                            <th scope="col" rowspan="2">#</th>
+                            <th scope="col" contenteditable="plaintext-only" class="value">Player 1</th>
+                            <th scope="col" contenteditable="plaintext-only" class="value">Player 2</th>
+                            <th scope="col" contenteditable="plaintext-only" class="value">Player 3</th>
+                            <th scope="col" contenteditable="plaintext-only" class="value">Player 4</th>
+                            <th scope="col" contenteditable="plaintext-only" class="value">Player 5</th>
+                            <th scope="col" contenteditable="plaintext-only" class="value">Player 6</th>
+                            <th scope="col" contenteditable="plaintext-only" class="value">Player 7</th>
+                            <th scope="col" contenteditable="plaintext-only" class="value">Player 8</th>
+                            <th scope="col" contenteditable="plaintext-only" class="value">Player 9</th>
+                            <th scope="col" contenteditable="plaintext-only" class="value">Player 10</th>
+                        </tr>
+                        <tr class="table-primary">
+                            <td scope="col" class="sum">0</th>
+                            <td scope="col" class="sum">0</th>
+                            <td scope="col" class="sum">0</th>
+                            <td scope="col" class="sum">0</th>
+                            <td scope="col" class="sum">0</th>
+                            <td scope="col" class="sum">0</th>
+                            <td scope="col" class="sum">0</th>
+                            <td scope="col" class="sum">0</th>
+                            <td scope="col" class="sum">0</th>
+                            <td scope="col" class="sum">0</th>
+                        </tr>
+                    </thead>
+                    <tbody class="rounds align-middle">
+                        <tr class="game-round">
+                            <th scope="row">1</th>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="text-center container">
+            <div class="col-lg-6 mx-auto">
+                <p class="lead mb-0 text-secondary">
+                    This project is <b>Open-Source</b>, page on <a class="text-primary" target="_blank"
+                        href="https://github.com/UNOScore/UNOScore.github.io">GitHub</a>.
+                </p>
+                <p class="lead mb-0 text-secondary">
+                    All data is stored in the user's web browser using <a class="text-primary" target="_blank"
+                        href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">localStorage</a>.
+                </p>
+                <p class="lead mb-5">
+                    <a class="text-primary" target="_blank" href="https://send.monobank.ua/jar/77PehNfWnX">Support this
+                        project</a>.
+                </p>
+            </div>
+        </div>
+    </footer>
+    <script type="text/javascript" src="/js/table.js"></script>
+</body>
+
+</html>
