@@ -17,42 +17,32 @@
             <div class="mb-5 text-center">
                 <h1>Eight players scoreboard</h1>
             </div>
-            <nav aria-label="breadcrumb">
+            <nav class="mb-3" aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a class="text-primary" href="/">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Eight players scoreboard</li>
                 </ol>
             </nav>
-            <table class="table table-bordered shadow-sm table-sm">
-                <thead>
-                    <tr>
-                        <th scope="col">
-                            <button type="button" class="btn btn-success" onclick="next_round()">Next Round</button>
-                        </th>
-                        <th scope="col">
-                            <button type="button" class="btn btn-success" onclick="next_game()">Next Game</button>
-                        </th>
-                        <th scope="col">
-                            <button type="button" class="btn btn-secondary" onclick="save_games()">Save Games</button>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th scope="col">
-                            <button type="button" class="btn btn-danger" onclick="remove_round()">Remove Round</button>
-                        </th>
-                        <th scope="col">
-                            <button type="button" class="btn btn-danger" onclick="remove_game()">Remove Game</button>
-                        </th>
-                        <th scope="col">
-                            <button type="button" class="btn btn-secondary" onclick="load_games()">Load Games</button>
-                        </th>
-                    </tr>
-                </thead>
-            </table>
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group me-3 mb-3" role="group" aria-label="Round buttons">
+                    <button type="button" class="btn btn-outline-primary" onclick="next_round()">Next Round</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="remove_round()">Remove Round</button>
+                </div>
+
+                <div class="btn-group me-3 mb-3" role="group" aria-label="Game buttons">
+                    <button type="button" class="btn btn-outline-primary" onclick="next_game()">Next Game</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="remove_game()">Remove Game</button>
+                </div>
+
+                <div class="btn-group mb-3" role="group" aria-label="Manage buttons">
+                    <button type="button" class="btn btn-outline-primary" onclick="save_games()">Save Games</button>
+                    <button type="button" class="btn btn-outline-primary" onclick="load_games()">Load Games</button>
+                </div>
+            </div>
             <div class="games">
-                <table class="game table table-striped table-bordered table-sm shadow-sm">
+                <table class="game table table-bordered table-sm shadow-sm text-center">
                     <thead class="align-middle">
-                        <tr class="table-primary">
+                        <tr>
                             <th scope="col" rowspan="2">#</th>
                             <th scope="col" contenteditable="plaintext-only" class="value">Player 1</th>
                             <th scope="col" contenteditable="plaintext-only" class="value">Player 2</th>
@@ -63,7 +53,7 @@
                             <th scope="col" contenteditable="plaintext-only" class="value">Player 7</th>
                             <th scope="col" contenteditable="plaintext-only" class="value">Player 8</th>
                         </tr>
-                        <tr class="table-primary">
+                        <tr>
                             <td scope="col" class="sum">0</th>
                             <td scope="col" class="sum">0</th>
                             <td scope="col" class="sum">0</th>
