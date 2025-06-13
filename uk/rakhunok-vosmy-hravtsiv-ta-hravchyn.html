@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="uk">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Відстежуйте результати УНО для восьми гравців та гравчинь за допомогою нашого безкоштовного онлайн-інструменту для підрахунку результатів. Простий, захищений та доступний з будь-якого пристрою - ідеально підходить для ігрових вечорів та особистого використання.">
+    
+    <link href="/../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unoscore.github.io/eight-players-scoreboard.html" rel="alternate" hreflang="en">
+
+    <title>Вісім гравців та гравчинь - УНО Рахунок</title>
+</head>
+
+<body>
+    <main class="container">
+        <div class="my-5">
+            <div class="mb-5 text-center">
+                <h1>Рахунок восьми гравців та гравчинь</h1>
+            </div>
+            <nav class="mb-3" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a class="text-primary" href="/uk/">Головна сторінка</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Рахунок восьми гравців та гравчинь</li>
+                </ol>
+            </nav>
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group me-3 mb-3 shadow-sm" role="group" aria-label="Round buttons">
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="next_round()">Наступний раудн</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="remove_round()">Видалити раудн</button>
+                </div>
+                <div class="btn-group me-3 mb-3 shadow-sm" role="group" aria-label="Game buttons">
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="next_game()">Наступна гра</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="remove_game()">Видалити гру</button>
+                </div>
+                <div class="btn-group mb-3 shadow-sm" role="group" aria-label="Manage buttons">
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="save_games()">Зберегти гру</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="load_games()">Завантажити гру</button>
+                </div>
+            </div>
+            <div class="games table-responsive">
+                <table class="game table table-bordered table-sm shadow-sm text-center">
+                    <thead class="align-middle">
+                        <tr>
+                            <th scope="col" rowspan="2">#</th>
+                            <th scope="col" contenteditable="plaintext-only" class="value">Ім'я 1</th>
+                            <th scope="col" contenteditable="plaintext-only" class="value">Ім'я 2</th>
+                            <th scope="col" contenteditable="plaintext-only" class="value">Ім'я 3</th>
+                            <th scope="col" contenteditable="plaintext-only" class="value">Ім'я 4</th>
+                            <th scope="col" contenteditable="plaintext-only" class="value">Ім'я 5</th>
+                            <th scope="col" contenteditable="plaintext-only" class="value">Ім'я 6</th>
+                            <th scope="col" contenteditable="plaintext-only" class="value">Ім'я 7</th>
+                            <th scope="col" contenteditable="plaintext-only" class="value">Ім'я 8</th>
+                        </tr>
+                        <tr>
+                            <td scope="col" class="sum">0</th>
+                            <td scope="col" class="sum">0</th>
+                            <td scope="col" class="sum">0</th>
+                            <td scope="col" class="sum">0</th>
+                            <td scope="col" class="sum">0</th>
+                            <td scope="col" class="sum">0</th>
+                            <td scope="col" class="sum">0</th>
+                            <td scope="col" class="sum">0</th>
+                        </tr>
+                    </thead>
+                    <tbody class="rounds align-middle">
+                        <tr class="game-round">
+                            <th scope="row">1</th>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+        <footer>
+        <div class="text-center container">
+            <div class="col-lg-6 mx-auto">
+                <p class="lead mb-0 text-secondary">
+                    Цей проект повністю <b>Open-Source</b>, сторінка на <a class="text-primary" target="_blank"
+                        href="https://github.com/UNOScore/UNOScore.github.io">GitHub</a>.
+                </p>
+                <p class="lead mb-0 text-secondary">
+                    Всі дані зберігаються у веббраузері користувача за допомогою <a class="text-primary" target="_blank"
+                        href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">localStorage</a>.
+                </p>
+                <p class="lead mb-0">
+                    <a class="text-primary" target="_blank" href="https://send.monobank.ua/jar/77PehNfWnX">Підтримайте цей проект</a>.
+                </p>
+                <p class="lead mb-5">
+                    <a class="text-primary" href="/eight-players-scoreboard.html">English version</a>.
+                </p>
+            </div>
+        </div>
+    </footer>
+    <script type="text/javascript" src="/../js/table.js"></script>
+</body>
+
+</html>
