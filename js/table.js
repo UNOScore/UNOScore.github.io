@@ -1,4 +1,4 @@
-'use strict'
+"use strict"
 
 function _find_last_game() {
     const lastGame = document.querySelector(".game");
@@ -21,12 +21,6 @@ function _find_games_container() {
     if (gamesContainer) return gamesContainer;
 
     throw new Error("Games container not found.");
-}
-
-function _clear_scores(node) {
-    node.querySelectorAll("[contenteditable").forEach(function (element) {
-        element.textContent = "";
-    });
 }
 
 function _find_number_of_players(lastGame) {
@@ -64,14 +58,83 @@ function _get_data_key() {
     return "uno_score_" + number_of_players;
 }
 
+function _get_games_data() {
+    const games = document.querySelectorAll(".game");
+    const data = [];
+
+    games.forEach(function (game, game_number) {
+        data[game_number] = [];
+
+        game.querySelectorAll(".value").forEach(function (value, index) {
+            data[game_number][index] = value.textContent;
+        });
+    });
+
+    return data;
+}
+
+function _clear_scores(node) {
+    node.querySelectorAll("[contenteditable").forEach(function (element) {
+        element.textContent = "";
+    });
+}
+
+function _get_template_game_and_round(lastGame) {
+    const templateGame = document.importNode(lastGame, true);
+    const templateGameRounds = templateGame.querySelectorAll(".game-round");
+    let templateGameRound;
+
+    templateGameRounds.forEach(function (gameRound, number) {
+        if (number == (templateGameRounds.length - 1)) {
+            _clear_scores(gameRound);
+            templateGameRound = gameRound;
+        } else {
+            gameRound.remove();
+        }
+    });
+
+    return [templateGame, templateGameRound];
+}
+
+function _load_games_from_data(games_data, number_of_players, default_nymber_of_items = 2) {
+    const lastGame = _find_last_game();
+    const [templateGame, templateGameRound] = _get_template_game_and_round(lastGame);
+
+    const gamesContainer = _find_games_container();
+    gamesContainer.textContent = "";
+
+    for (const game of games_data) {
+        const newGame = document.importNode(templateGame, true);
+        const newRoundsContainer = newGame.querySelector(".rounds");
+
+        for (let i = 0; i < (game.length / number_of_players) - default_nymber_of_items; i++) {
+            const newRound = document.importNode(templateGameRound, true);
+            const newRoundNumber = newRound.querySelector("[scope=\"row\"]");
+            if (newRoundNumber) {
+                newRoundNumber.textContent = i + default_nymber_of_items;
+                newRoundsContainer.prepend(newRound);
+            }
+        }
+
+        newGame.querySelectorAll(".value").forEach(function (element, key) {
+            element.textContent = game[key] ?? "";
+        });
+
+        _calculate_game_sum(newGame);
+
+        gamesContainer.append(newGame);
+    }
+}
+
 function calculate_sum(element) {
     const closestGame = element.closest(".game");
+    if (!closestGame) throw new Error("Closest game not found.");
+
     _calculate_game_sum(closestGame);
 }
 
 function next_round() {
     const previousRound = _find_previous_round();
-
     const newRound = document.importNode(previousRound, true);
     const topRound = newRound.querySelector("[scope=\"row\"]");
     if (!topRound) throw new Error("Top round not found.");
@@ -89,8 +152,9 @@ function next_round() {
 function remove_round() {
     const previousRound = _find_previous_round();
     const previousRoundFirstRow = previousRound.querySelector("[scope=\"row\"]");
-    const previousRoundNumber = parseInt(previousRoundFirstRow.textContent);
+    if (!previousRoundFirstRow) throw new Error("First row of previous round not found.");
 
+    const previousRoundNumber = parseInt(previousRoundFirstRow.textContent);
     if (previousRoundNumber > 1) {
         const closestGame = previousRound.closest(".game");
 
@@ -103,8 +167,8 @@ function remove_round() {
 function next_game() {
     const lastGame = _find_last_game();
     const gamesContainer = _find_games_container();
-
     if (!gamesContainer) throw new Error("Games container not found.");
+
     const newGame = document.importNode(lastGame, true);
     const gameRounds = newGame.querySelectorAll(".game-round");
     gameRounds.forEach(function (gameRound, number) {
@@ -123,25 +187,14 @@ function next_game() {
 function remove_game() {
     const lastGame = _find_last_game();
     const gamesContainer = _find_games_container();
-
     if (gamesContainer.children.length > 1) {
         lastGame.remove();
     }
 }
 
 function save_games() {
-    const games = document.querySelectorAll(".game");
-    const data = [];
-
-    games.forEach(function (game, game_number) {
-        data[game_number] = [];
-
-        game.querySelectorAll(".value").forEach(function (value, index) {
-            data[game_number][index] = value.textContent;
-        });
-    });
-
     const data_key = _get_data_key();
+    const data = _get_games_data();
     localStorage.setItem(data_key, JSON.stringify(data));
 }
 
@@ -151,43 +204,40 @@ function load_games() {
     if (!data) throw new Error("No saved data");
 
     const lastGame = _find_last_game();
-    const templateGame = document.importNode(lastGame, true);
-    const templateGameRounds = templateGame.querySelectorAll(".game-round");
-    let templateGameRound;
-
-    templateGameRounds.forEach(function (gameRound, number) {
-        if (number == (templateGameRounds.length - 1)) {
-            _clear_scores(gameRound);
-            templateGameRound = gameRound;
-        } else {
-            gameRound.remove();
-        }
-    });
-
-    const gamesContainer = _find_games_container();
-    gamesContainer.textContent = '';
-
     const number_of_players = _find_number_of_players(lastGame);
-    const default_nymber_of_items = 2;
 
-    for (const game of data) {
-        const newGame = document.importNode(templateGame, true);
-        const newRoundsContainer = newGame.querySelector(".rounds");
+    _load_games_from_data(data, number_of_players);
+}
 
-        for (let i = 0; i < (game.length / number_of_players) - default_nymber_of_items; i++) {
-            const newRound = document.importNode(templateGameRound, true);
-            const newRoundNumber = newRound.querySelector("[scope=\"row\"]");
-            newRoundNumber.textContent = i + default_nymber_of_items;
+function import_games() {
+    const inputElement = document.getElementById("import");
+    if (!inputElement) throw new Error("Import element not found.");
 
-            newRoundsContainer.prepend(newRound);
+    if (!inputElement.onchange) {
+        inputElement.onchange = function () {
+            for (const file of this.files) {
+                file.text().then(function (raw) {
+                    const data = JSON.parse(raw);
+                    if (!data["games_data"]) throw new Error("Games data not found.");
+                    if (!data["number_of_players"]) throw new Error("Number of players not found.");
+
+                    _load_games_from_data(data["games_data"], data["number_of_players"]);
+                });
+            }
         }
-
-        newGame.querySelectorAll('.value').forEach(function (element, key) {
-            element.textContent = game[key] ?? "";
-        });
-
-        _calculate_game_sum(newGame);
-
-        gamesContainer.append(newGame);
     }
+
+    inputElement.click();
+}
+
+function export_games() {
+    const exportElement = document.getElementById("export");
+    if (!exportElement) throw new Error("Export element not found.");
+
+    const lastGame = _find_last_game();
+    const number_of_players = _find_number_of_players(lastGame);
+    const games_data = _get_games_data();
+    const raw_data = JSON.stringify({ "games_data": games_data, "number_of_players": number_of_players });
+
+    exportElement.href = "data:attachment/json," + encodeURIComponent(raw_data);
 }

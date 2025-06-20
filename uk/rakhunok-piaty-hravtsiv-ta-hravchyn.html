@@ -33,9 +33,14 @@
                     <button type="button" class="btn btn-outline-primary btn-sm" onclick="next_game()">Наступна гра</button>
                     <button type="button" class="btn btn-outline-primary btn-sm" onclick="remove_game()">Видалити гру</button>
                 </div>
+                <div class="btn-group me-3 mb-3 shadow-sm" role="group" aria-label="Manage buttons">
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="save_games()">Зберегти ігри</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="load_games()">Завантажити ігри</button>
+                </div>
                 <div class="btn-group mb-3 shadow-sm" role="group" aria-label="Manage buttons">
-                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="save_games()">Зберегти гру</button>
-                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="load_games()">Завантажити гру</button>
+                    <a id="export" type="button" class="btn btn-outline-primary btn-sm" download="rakhunok_piaty_hravtsiv_ta_hravchyn.json" onmousedown="export_games()">Експортувати ігри</a>
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="import_games()">Імпортувати ігри</button>
+                    <input id="import" type="file" hidden accept="application/json"/>
                 </div>
             </div>
             <div class="games table-responsive">
@@ -91,7 +96,7 @@
             </div>
         </div>
     </footer>
-    <script type="text/javascript" src="/../js/table.js"></script>
+    <script type="text/javascript" src="/../js/table.js?1"></script>
 </body>
 
 </html>
