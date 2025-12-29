@@ -26,20 +26,16 @@
             </nav>
             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="btn-group me-3 mb-3 shadow-sm" role="group" aria-label="Round buttons">
-                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="next_round()">Next round</button>
-                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="remove_round()">Remove round</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="next_round_and_save()">Next round</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="remove_round_and_save()">Remove round</button>
                 </div>
                 <div class="btn-group me-3 mb-3 shadow-sm" role="group" aria-label="Game buttons">
-                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="next_game()">Next game</button>
-                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="remove_game()">Remove game</button>
-                </div>
-                <div class="btn-group me-3 mb-3 shadow-sm" role="group" aria-label="Manage buttons">
-                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="save_games()">Save games</button>
-                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="load_games()">Load games</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="next_game_and_save()">Next game</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="remove_game_and_save()">Remove game</button>
                 </div>
                 <div class="btn-group mb-3 shadow-sm" role="group" aria-label="Manage buttons">
                     <a id="export" type="button" class="btn btn-outline-primary btn-sm" download="five_players_scoreboard.json" onmousedown="export_games()">Export games</a>
-                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="import_games()">Import games</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="import_games_and_save()">Import games</button>
                     <input id="import" type="file" hidden accept="application/json"/>
                 </div>
             </div>
@@ -48,11 +44,11 @@
                     <thead class="align-middle">
                         <tr>
                             <th scope="col" rowspan="2">#</th>
-                            <th scope="col" contenteditable="plaintext-only" class="value">Name 1</th>
-                            <th scope="col" contenteditable="plaintext-only" class="value">Name 2</th>
-                            <th scope="col" contenteditable="plaintext-only" class="value">Name 3</th>
-                            <th scope="col" contenteditable="plaintext-only" class="value">Name 4</th>
-                            <th scope="col" contenteditable="plaintext-only" class="value">Name 5</th>
+                            <th scope="col" contenteditable="plaintext-only" onkeyup="save_games()" class="value">Name 1</th>
+                            <th scope="col" contenteditable="plaintext-only" onkeyup="save_games()" class="value">Name 2</th>
+                            <th scope="col" contenteditable="plaintext-only" onkeyup="save_games()" class="value">Name 3</th>
+                            <th scope="col" contenteditable="plaintext-only" onkeyup="save_games()" class="value">Name 4</th>
+                            <th scope="col" contenteditable="plaintext-only" onkeyup="save_games()" class="value">Name 5</th>
                         </tr>
                         <tr>
                             <td scope="col" class="sum">0</th>
@@ -65,11 +61,11 @@
                     <tbody class="rounds align-middle">
                         <tr class="game-round">
                             <th scope="row">1</th>
-                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
-                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
-                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
-                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
-                            <td contenteditable="plaintext-only" onkeyup="calculate_sum(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum_and_save(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum_and_save(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum_and_save(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum_and_save(this)" class="value"></td>
+                            <td contenteditable="plaintext-only" onkeyup="calculate_sum_and_save(this)" class="value"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -97,7 +93,7 @@
             </div>
         </div>
     </footer>
-    <script type="text/javascript" src="/js/table.js?1"></script>
+    <script type="text/javascript" src="/js/table.js?2"></script>
 </body>
 
 </html>
