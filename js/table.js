@@ -126,14 +126,16 @@ function _load_games_from_data(games_data, number_of_players, default_nymber_of_
     }
 }
 
-function calculate_sum(element) {
+function calculate_sum_and_save(element) {
     const closestGame = element.closest(".game");
     if (!closestGame) throw new Error("Closest game not found.");
 
     _calculate_game_sum(closestGame);
+
+    save_games()
 }
 
-function next_round() {
+function next_round_and_save() {
     const previousRound = _find_previous_round();
     const newRound = document.importNode(previousRound, true);
     const topRound = newRound.querySelector("[scope=\"row\"]");
@@ -147,9 +149,11 @@ function next_round() {
     if (!parentRound) throw new Error("Parent round not found.");
 
     parentRound.prepend(newRound);
+
+    save_games()
 }
 
-function remove_round() {
+function remove_round_and_save() {
     const previousRound = _find_previous_round();
     const previousRoundFirstRow = previousRound.querySelector("[scope=\"row\"]");
     if (!previousRoundFirstRow) throw new Error("First row of previous round not found.");
@@ -161,10 +165,12 @@ function remove_round() {
         previousRound.remove();
 
         _calculate_game_sum(closestGame);
+
+        save_games()
     }
 }
 
-function next_game() {
+function next_game_and_save() {
     const lastGame = _find_last_game();
     const gamesContainer = _find_games_container();
     if (!gamesContainer) throw new Error("Games container not found.");
@@ -182,34 +188,21 @@ function next_game() {
     _calculate_game_sum(newGame);
 
     gamesContainer.prepend(newGame);
+
+    save_games()
 }
 
-function remove_game() {
+function remove_game_and_save() {
     const lastGame = _find_last_game();
     const gamesContainer = _find_games_container();
     if (gamesContainer.children.length > 1) {
         lastGame.remove();
     }
+
+    save_games()
 }
 
-function save_games() {
-    const data_key = _get_data_key();
-    const data = _get_games_data();
-    localStorage.setItem(data_key, JSON.stringify(data));
-}
-
-function load_games() {
-    const data_key = _get_data_key();
-    const data = JSON.parse(localStorage.getItem(data_key));
-    if (!data) throw new Error("No saved data");
-
-    const lastGame = _find_last_game();
-    const number_of_players = _find_number_of_players(lastGame);
-
-    _load_games_from_data(data, number_of_players);
-}
-
-function import_games() {
+function import_games_and_save() {
     const inputElement = document.getElementById("import");
     if (!inputElement) throw new Error("Import element not found.");
 
@@ -222,6 +215,8 @@ function import_games() {
                     if (!data["number_of_players"]) throw new Error("Number of players not found.");
 
                     _load_games_from_data(data["games_data"], data["number_of_players"]);
+
+                    save_games()
                 });
             }
         }
@@ -241,3 +236,22 @@ function export_games() {
 
     exportElement.href = "data:attachment/json," + encodeURIComponent(raw_data);
 }
+
+function save_games() {
+    const data_key = _get_data_key();
+    const data = _get_games_data();
+    localStorage.setItem(data_key, JSON.stringify(data));
+}
+
+function load_games() {
+    const data_key = _get_data_key();
+    const data = JSON.parse(localStorage.getItem(data_key));
+    if (!data) throw new Error("No saved data");
+
+    const lastGame = _find_last_game();
+    const number_of_players = _find_number_of_players(lastGame);
+
+    _load_games_from_data(data, number_of_players);
+}
+
+load_games()
